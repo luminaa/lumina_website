@@ -1,4 +1,6 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const app = express();
 const port = 3000;
 
@@ -17,7 +19,10 @@ app.use(
   }),
 );
 
-//routes
+//auth routes
+app.use("/auth", require("./routes/auth"));
+
+// routes
 
 // start server
 app.listen(port, () => {
