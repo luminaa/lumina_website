@@ -23,6 +23,9 @@ app.use(
 app.use("/auth", require("./routes/auth"));
 
 // routes
+app.use("/admin", require("./routes/admin"));
+app.use("/blogs", require("./routes/blogs"));
+app.use("/waitlist", require("./routes/waitlist"));
 
 // start server
 app.listen(port, () => {

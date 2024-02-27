@@ -1,4 +1,3 @@
-
 const { Router } = require("express");
 const router = Router();
 const User = require("../database/schemas/User");
@@ -49,6 +48,15 @@ router.post("/login", async (req, res) => {
     } else {
       res.status(400).send("Bad Request");
     }
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  if (req.session.user) {
+    req.session.destroy();
+    res.status(200).send("Logged out");
+  } else {
+    res.status(400).send("Bad Request");
   }
 });
 

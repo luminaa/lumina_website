@@ -3,19 +3,12 @@ const router = Router();
 const User = require("../database/schemas/User");
 const Waitlist = require("../database/schemas/Waitlist");
 
-
-router.get("/", (req, res) => {
-  Waitlist.find({}).then((waitlist) => {
-    res.status(200).json(waitlist);
-  });
-});
-
-router.post("/", (req, res) => {
+router.post("",async (req, res) => {
   const { name, email } = req.body;
   if (!name || !email) {
     return res.status(400).json({ error: "Name and email are required" });
   }
-  const waitlist = Waitlist.findOne({ email });
+  const waitlist = await Waitlist.findOne({ email });
   if (waitlist) {
     return res.status(400).json({ error: "Email already exists" });
   }

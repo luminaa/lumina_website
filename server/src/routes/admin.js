@@ -1,5 +1,8 @@
 const { Router } = require("express");
 const router = Router();
+const User = require("../database/schemas/User");
+const Waitlist = require("../database/schemas/Waitlist");
+const Blog = require("../database/schemas/Blog");
 
 router.use("", (req, res, next) => {
   if (req.session.user) {
@@ -10,17 +13,17 @@ router.use("", (req, res, next) => {
 });
 
 router.get("/waitlist", async (req, res) => {
-  const waitlist = await Waitlist.findall();
-  if (waitlist) {
-    res.status(200).send(waitlist);
+  const waitlists = await Waitlist.find();
+  if (waitlists) {
+    res.status(200).send(waitlists);
   } else {
     res.status(404).send("Not found");
   }
 });
 
 router.get("/blogs", async (req, res) => {
-  const author= await User.findOne({ userName: req.session.user.userName });
-  const blogs = await Blog.find({author: author});
+  const author = await User.findOne({ userName: req.session.user.userName });
+  const blogs = await Blog.find({ author: author });
   if (blogs) {
     res.status(200).send(blogs);
   } else {
@@ -39,3 +42,5 @@ router.post("/blogs", async (req, res) => {
     res.status(400).send("Bad Request");
   }
 });
+
+module.exports = router;
